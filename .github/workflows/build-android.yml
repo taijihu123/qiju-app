@@ -32,6 +32,11 @@ jobs:
         android-sdk-license-accept: true
         packages: "build-tools;33.0.2 platforms;android-33 cmdline-tools;latest"
 
+    - name: Set up Gradle
+      uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: '8.14.3'  # 项目使用的Gradle版本
+
     - name: Build Android APK (无Expo账号版)
       run: |
         # 1. 配置Android环境变量
