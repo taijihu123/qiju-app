@@ -26,9 +26,21 @@ jobs:
         npx expo install --fix --  --legacy-peer-deps
         npx expo install react-native-web react-dom @expo/metro-runtime
 
-    - name: Build Android APK
+    - name: Set up Android SDK
+      uses: android-actions/setup-android@v3
+      with:
+        android-sdk-license-accept: true
+        packages: "build-tools;33.0.2 platforms;android-33 cmdline-tools;latest"
+
+    - name: Build Android APK (无Expo账号版)
       run: |
-        npx expo run:android --variant=release
+        # 1. 配置Android环境变量
+        export ANDROID_HOME=$HOME/Android/Sdk
+        export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/33.0.2
+        # 2. 用Expo的本地构建命令（不依赖Expo账号）
+        npx expo prebuild --platform android  # 生成Android原生项目
+        cd android
+        ./gradlew assembleRelease  # 用Gradle直接打包APK
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
