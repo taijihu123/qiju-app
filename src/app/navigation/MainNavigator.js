@@ -29,6 +29,8 @@ import OrderDetailScreen from '../../features/order/components/OrderDetailScreen
 import LifeCoinScreen from '../../features/life-coin/components/LifeCoinScreen';
 import FavoritesPage from '../../pages/FavoritesPage';
 import AssistantScreen from '../../features/assistant/components/AssistantScreen';
+import ContractListScreen from '../../features/contract/components/ContractListScreen';
+import ContractDetailScreen from '../../features/contract/components/ContractDetailScreen';
 
 // 导入区块链示例组件
 import BlockchainBalanceExample from '../../examples/BlockchainBalanceExample';
@@ -429,7 +431,7 @@ const MainNavigator = () => {
       {/* 合同列表页 */}
       <Stack.Screen 
         name="ContractList" 
-        component={ContractsScreen} 
+        component={ContractListScreen} 
         options={({ navigation }) => ({
           headerShown: true,
           headerLeft: () => (
@@ -440,6 +442,15 @@ const MainNavigator = () => {
               <Ionicons name="arrow-back" size={24} color="#000" />
             </TouchableOpacity>
           ),
+        })}
+      />
+      
+      {/* 合同详情页 */}
+      <Stack.Screen 
+        name="ContractDetail" 
+        component={ContractDetailScreen} 
+        options={({ navigation }) => ({
+          headerShown: false
         })}
       />
       

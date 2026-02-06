@@ -269,7 +269,7 @@ const RentHousePage = () => {
         <View style={styles.header}>
           <View style={styles.searchBar}>
             <Ionicons name="search" size={20} color={theme.colors.textSecondary} />
-            <Text style={styles.searchPlaceholder}>去油蓬松的邪恶...</Text>
+            <Text style={styles.searchPlaceholder}>搜索理想居所...</Text>
           </View>
           <TouchableOpacity style={styles.headerIcon}>
             <Ionicons name="headset-outline" size={24} color={theme.colors.textPrimary} />

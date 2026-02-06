@@ -163,25 +163,7 @@ const ServicePage = () => {
           <Text style={styles.headerSubtitle}>您的生活好帮手</Text>
         </View>
 
-        {/* 服务分类 */}
-        <View style={styles.categoriesContainer}>
-          <FlatList
-            data={[
-              { id: 'all', name: '全部', icon: 'apps-outline', color: theme.colors.primary }
-            ].concat(Array.isArray(categories) ? categories : [])}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={item => item.id.toString()}
-            renderItem={({ item }) => (
-              <ServiceCategory
-                category={item}
-                isSelected={selectedCategory === item.id}
-                onPress={() => filterServicesByCategory(item.id)}
-              />
-            )}
-            contentContainerStyle={styles.categoriesList}
-          />
-        </View>
+
 
         {/* 生活管家 */}
         <TouchableOpacity

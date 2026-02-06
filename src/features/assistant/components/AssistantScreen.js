@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView, Platform, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { theme } from '../../../common/styles/theme';
 
@@ -75,7 +75,7 @@ const AssistantScreen = () => {
       <View style={[styles.messageContainer, isUser ? styles.userMessageContainer : styles.assistantMessageContainer]}>
         {!isUser && (
           <View style={styles.avatarContainer}>
-            <Ionicons name="chatbubbles-outline" size={30} color={theme.colors.primary} />
+            <Image source={{ uri: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=digital%20human%20avatar%20friendly%20face%20circle%20style&image_size=square' }} style={styles.avatar} />
           </View>
         )}
         <View style={[styles.messageBubble, isUser ? styles.userMessageBubble : styles.assistantMessageBubble]}>
@@ -165,6 +165,12 @@ const styles = StyleSheet.create({
   },
   avatarContainer: {
     marginHorizontal: 10,
+    justifyContent: 'center',
+  },
+  avatar: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
   },
   messageBubble: {
     maxWidth: '70%',

@@ -8,7 +8,7 @@ const DoubanSidebar = ({ navigation, onClose }) => {
   const userData = {
     id: '1',
     name: '上海智能Ailake',
-    avatar: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=green%20plant%20avatar%20circle%20douban%20style&image_size=square',
+    avatar: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=big%20green%20leaf%20circle%20avatar%20nature%20style&image_size=square',
     backpack: {
       items: 11,
       hasNew: true
