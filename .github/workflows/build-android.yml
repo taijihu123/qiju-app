@@ -1,15 +1,12 @@
 name: Build Android APK
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
 
     steps:
     - uses: actions/checkout@v4
@@ -17,50 +14,26 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '25.2.1'  # 与本地项目使用的Node版本一致
-        cache: 'npm'
+        node-version: '25.2.1'
 
     - name: Install dependencies
       run: |
-        # 清理缓存并安装依赖
-        rm -rf node_modules package-lock.json
         npm install --legacy-peer-deps
-        # 修复依赖冲突
         npx expo install --fix -- --legacy-peer-deps
-        # 安装必要的依赖
-        npx expo install react-native-web react-dom @expo/metro-runtime
-        # 确保安装了所有必要的Expo依赖
-        npx expo install --  --legacy-peer-deps
 
     - name: Set up Android SDK
       uses: android-actions/setup-android@v3
       with:
         android-sdk-license-accept: true
-        packages: "build-tools;33.0.2 platforms;android-33 cmdline-tools;latest"
+        packages: "build-tools;33.0.2 platforms;android-33"
 
-    - name: Set up Gradle
-      uses: gradle/gradle-build-action@v2
-      with:
-        gradle-version: '8.14.3'  # 项目使用的Gradle版本
-
-    - name: Build Android APK (无Expo账号版)
+    - name: Build Android APK
       run: |
-        # 1. 配置Android环境变量
         export ANDROID_HOME=$HOME/Android/Sdk
         export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/33.0.2
-        # 2. 清理可能的缓存问题
-        rm -rf .expo
-        # 3. 检查Expo版本和依赖
-        npx expo --version
-        npm list --depth=0
-        # 4. 用Expo的本地构建命令（不依赖Expo账号）
-        npx expo prebuild --platform android --clean  # 生成Android原生项目并清理缓存
-        # 5. 进入Android目录并打包
+        npx expo prebuild --platform android
         cd android
-        # 6. 增加Gradle堆内存，避免内存不足
-        export GRADLE_OPTS="-Xmx4g -XX:MaxMetaspaceSize=512m"
-        # 7. 用Gradle直接打包APK
-        ./gradlew assembleRelease --no-daemon --info
+        ./gradlew assembleRelease --no-daemon
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
