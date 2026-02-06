@@ -18,18 +18,26 @@ const DoubanSidebar = ({ navigation, onClose }) => {
   // 功能菜单项
   const menuItems = [
     {
-      id: 'drafts',
-      title: '草稿箱',
+      id: 'contracts',
+      title: '租房合同',
       icon: 'document-text-outline',
       onPress: () => {
-        navigation.navigate('Favorites');
+        navigation.navigate('My');
+        onClose();
+      }
+    },
+    {
+      id: 'orders',
+      title: '我的订单',
+      icon: 'receipt-outline',
+      onPress: () => {
+        navigation.navigate('My');
         onClose();
       }
     },
     {
       id: 'collections',
-      title: '我的收藏/豆列',
-      subtitle: '我的豆列在这里',
+      title: '我的收藏',
       icon: 'bookmark-outline',
       onPress: () => {
         navigation.navigate('Favorites');
@@ -37,29 +45,56 @@ const DoubanSidebar = ({ navigation, onClose }) => {
       }
     },
     {
-      id: 'following',
-      title: '我的关注',
-      icon: 'add-circle-outline',
+      id: 'lifeCoin',
+      title: '生活币',
+      icon: 'cash-outline',
       onPress: () => {
-        navigation.navigate('Community');
+        navigation.navigate('LifeCoin');
         onClose();
       }
     },
     {
-      id: 'history',
-      title: '浏览历史',
-      icon: 'time-outline',
+      id: 'services',
+      title: '生活服务',
+      icon: 'cube-outline',
+      onPress: () => {
+        navigation.navigate('Service');
+        onClose();
+      }
+    },
+    {
+      id: 'personal',
+      title: '我的个人',
+      icon: 'person-outline',
       onPress: () => {
         navigation.navigate('My');
         onClose();
       }
     },
     {
-      id: 'minor',
-      title: '未成年人模式',
-      icon: 'shield-checkmark-outline',
+      id: 'info',
+      title: '个人信息',
+      icon: 'information-circle-outline',
       onPress: () => {
-        navigation.navigate('Settings');
+        navigation.navigate('My');
+        onClose();
+      }
+    },
+    {
+      id: 'knowledge',
+      title: '知识管理',
+      icon: 'book-outline',
+      onPress: () => {
+        navigation.navigate('Knowledge');
+        onClose();
+      }
+    },
+    {
+      id: 'assistant',
+      title: '智能助手',
+      icon: 'chatbubbles-outline',
+      onPress: () => {
+        navigation.navigate('Assistant');
         onClose();
       }
     },
@@ -71,84 +106,10 @@ const DoubanSidebar = ({ navigation, onClose }) => {
         navigation.navigate('Settings');
         onClose();
       }
-    },
-    {
-      id: 'help',
-      title: '帮助与反馈',
-      icon: 'help-circle-outline',
-      onPress: () => {
-        navigation.navigate('My');
-        onClose();
-      }
-    },
-    {
-      id: 'community',
-      title: '社区管理中心',
-      icon: 'people-outline',
-      onPress: () => {
-        navigation.navigate('Community');
-        onClose();
-      }
     }
   ];
 
-  // 快捷功能项
-  const quickItems = [
-    {
-      id: 'orders',
-      title: '订单',
-      icon: 'receipt-outline',
-      onPress: () => {
-        navigation.navigate('OrderList');
-        onClose();
-      }
-    },
-    {
-      id: 'cart',
-      title: '购物车',
-      icon: 'cart-outline',
-      onPress: () => {
-        navigation.navigate('Supermarket');
-        onClose();
-      }
-    },
-    {
-      id: 'wallet',
-      title: '钱包',
-      icon: 'wallet-outline',
-      onPress: () => {
-        navigation.navigate('LifeCoin');
-        onClose();
-      }
-    },
-    {
-      id: 'time',
-      title: '豆瓣时间',
-      icon: 'time-outline',
-      onPress: () => {
-        navigation.navigate('Community');
-        onClose();
-      }
-    },
-    {
-      id: 'reading',
-      title: '豆瓣阅读',
-      icon: 'book-outline',
-      onPress: () => {
-        navigation.navigate('Knowledge');
-        onClose();
-      }
-    },
-    {
-      id: 'welfare',
-      title: '每日福利',
-      icon: 'gift-outline',
-      onPress: () => {
-        navigation.navigate('LifeCoin');
-        onClose();
-      }
-    }
-  ];
+
 
   return (
     <View style={styles.container}>
@@ -195,31 +156,7 @@ const DoubanSidebar = ({ navigation, onClose }) => {
         ))}
       </ScrollView>
 
-      {/* 快捷功能 */}
-      <View style={styles.quickSection}>
-        <View style={styles.quickGrid}>
-          {quickItems.map((item, index) => (
-            <TouchableOpacity
-              key={item.id}
-              style={styles.quickItem}
-              onPress={item.onPress}
-            >
-              <View style={styles.quickItemIcon}>
-                <Ionicons name={item.icon} size={24} color={theme.colors.primary} />
-              </View>
-              <Text style={styles.quickItemText}>{item.title}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </View>
 
-      {/* 底部认证信息 */}
-      <View style={styles.footer}>
-        <TouchableOpacity style={styles.licenseButton}>
-          <Ionicons name="shield-checkmark" size={16} color={theme.colors.primary} />
-          <Text style={styles.licenseText}>豆瓣 证照信息</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };
@@ -321,52 +258,7 @@ const styles = StyleSheet.create({
     color: theme.colors.textSecondary,
     marginTop: 2,
   },
-  // 快捷功能
-  quickSection: {
-    padding: 20,
-    borderTopWidth: 8,
-    borderTopColor: theme.colors.borderLight,
-  },
-  quickGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  quickItem: {
-    width: '30%',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  quickItemIcon: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: theme.colors.primaryLight,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  quickItemText: {
-    fontSize: 12,
-    color: theme.colors.textPrimary,
-    textAlign: 'center',
-  },
-  // 底部
-  footer: {
-    padding: 20,
-    borderTopWidth: 1,
-    borderTopColor: theme.colors.borderLight,
-  },
-  licenseButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  licenseText: {
-    fontSize: 12,
-    color: theme.colors.primary,
-    marginLeft: 4,
-  },
+
 });
 
 export default DoubanSidebar;
