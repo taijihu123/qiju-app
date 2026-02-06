@@ -266,17 +266,14 @@ const MyPage = () => {
               {/* 我的背包 - 豆瓣风格 */}
               <View style={styles.backpackContainer}>
                 <View style={styles.backpackItem}>
-                  <Ionicons name="document-text-outline" size={20} color={theme.colors.primary} />
                   <Text style={styles.backpackText}>租赁合同</Text>
                 </View>
                 <View style={styles.backpackDivider} />
                 <View style={styles.backpackItem}>
-                  <Ionicons name="cash-outline" size={20} color={theme.colors.primary} />
                   <Text style={styles.backpackText}>生活币: {lifeCoin}</Text>
                 </View>
                 <View style={styles.backpackDivider} />
                 <View style={styles.backpackItem}>
-                  <Ionicons name="star-outline" size={20} color={theme.colors.primary} />
                   <Text style={styles.backpackText}>{userInfo.memberLevel || '普通会员'}</Text>
                 </View>
               </View>

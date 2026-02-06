@@ -14,8 +14,6 @@ const CommunityPage = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [commentInput, setCommentInput] = useState('');
-  const [replyingTo, setReplyingTo] = useState(null);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('加载失败，请稍后重试');
 
@@ -180,34 +178,7 @@ const CommunityPage = () => {
     }
   };
 
-  // 提交评论
-  const submitComment = async (postId, content) => {
-    try {
-      const response = await commentOnPost(postId, { content });
-      if (response.code === 200) {
-        // 重新加载帖子列表
-        loadPosts();
-        setCommentInput('');
-        setReplyingTo(null);
-        return true;
-      } else {
-        logger.error('提交评论失败:', response.msg);
-        return false;
-      }
-    } catch (error) {
-      logger.error('提交评论失败:', error);
-      
-      // 检查是否是认证错误
-      if (error.isAuthError || error.name === 'AuthError' || error.status === 401) {
-        console.log('🔐 认证错误，跳转到登录页面');
-        // 跳转到登录页面
-        navigation.navigate('Login');
-        return false;
-      }
-      
-      return false;
-    }
-  };
+
 
   // 渲染我的小组卡片
   const renderMyGroup = ({ item }) => (
@@ -253,10 +224,7 @@ const CommunityPage = () => {
           <Text style={[styles.actionText, item.isLiked && styles.actionTextActive]}>{item.likes}</Text>
         </TouchableOpacity>
         
-        <TouchableOpacity 
-          style={styles.actionButton}
-          onPress={() => setReplyingTo(replyingTo === item.id ? null : item.id)}
-        >
+        <TouchableOpacity style={styles.actionButton}>
           <Ionicons name="chatbubble-outline" size={18} color={theme.colors.textSecondary} />
           <Text style={styles.actionText}>{item.comments.length || 0}</Text>
         </TouchableOpacity>
@@ -266,26 +234,6 @@ const CommunityPage = () => {
           <Text style={styles.actionText}>{item.shares || 0}</Text>
         </TouchableOpacity>
       </View>
-      
-      {/* 评论输入框 */}
-      {replyingTo === item.id && (
-        <View style={styles.commentInputContainer}>
-          <TextInput
-            style={styles.commentInput}
-            placeholder="写下你的评论..."
-            value={commentInput}
-            onChangeText={setCommentInput}
-            multiline
-          />
-          <TouchableOpacity 
-            style={[styles.sendButton, !commentInput.trim() && styles.sendButtonDisabled]}
-            onPress={() => commentInput.trim() && submitComment(item.id, commentInput)}
-            disabled={!commentInput.trim()}
-          >
-            <Text style={styles.sendButtonText}>发送</Text>
-          </TouchableOpacity>
-        </View>
-      )}
     </View>
   );
 
@@ -360,48 +308,6 @@ const CommunityPage = () => {
         {/* 条件渲染：社区或知识内容 */}
         {activeTab === 'community' ? (
           <>
-            {/* 我的小组横向滚动 */}
-            <View style={styles.myGroupsSection}>
-              <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>我的小组</Text>
-                <TouchableOpacity>
-                  <Text style={styles.sectionMore}>全部</Text>
-                </TouchableOpacity>
-              </View>
-              <FlatList
-                data={myGroups}
-                renderItem={renderMyGroup}
-                keyExtractor={item => item.id}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.myGroupsList}
-              />
-            </View>
-
-            {/* 正在讨论标签栏 */}
-            <View style={styles.tabContainer}>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <TouchableOpacity style={[styles.tab, styles.tabActive]}>
-                  <Text style={[styles.tabText, styles.tabTextActive]}>全部</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.tab}>
-                  <Text style={styles.tabText}>生活</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.tab}>
-                  <Text style={styles.tabText}>书影音</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.tab}>
-                  <Text style={styles.tabText}>兴趣</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.tab}>
-                  <Text style={styles.tabText}>校园</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.tab}>
-                  <Text style={styles.tabText}>家居</Text>
-                </TouchableOpacity>
-              </ScrollView>
-            </View>
-
             {/* 帖子列表 */}
             <FlatList
               data={posts}
