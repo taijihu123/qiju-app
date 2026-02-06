@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 45
 
     steps:
     - uses: actions/checkout@v4
@@ -17,106 +17,28 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '25.2.1'
-        cache: 'npm'
 
     - name: Install dependencies
       run: |
-        echo "Installing dependencies..."
         npm install --legacy-peer-deps
-        if [ $? -ne 0 ]; then
-          echo "Primary npm install failed, trying alternative approach..."
-          npm install --legacy-peer-deps --verbose
-          if [ $? -ne 0 ]; then
-            echo "npm install failed, trying with --force..."
-            npm install --legacy-peer-deps --force
-          fi
-        fi
-        echo "Installing Expo dependencies..."
         npx expo install --fix -- --legacy-peer-deps
-        if [ $? -ne 0 ]; then
-          echo "Expo install failed, trying with --force..."
-          npx expo install --fix -- --legacy-peer-deps --force
-        fi
-        echo "Dependencies installed successfully"
 
     - name: Set up Android SDK
       uses: android-actions/setup-android@v3
       with:
         android-sdk-license-accept: true
-        packages: "build-tools;33.0.2 platforms;android-33 platform-tools"
-
-    - name: Verify Android SDK installation
-      run: |
-        echo "Verifying Android SDK installation..."
-        export ANDROID_HOME=$HOME/Android/Sdk
-        export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/33.0.2
-        if [ ! -d "$ANDROID_HOME" ]; then
-          echo "Android SDK directory not found: $ANDROID_HOME"
-          exit 1
-        fi
-        if [ ! -d "$ANDROID_HOME/build-tools/33.0.2" ]; then
-          echo "Android build tools not found: $ANDROID_HOME/build-tools/33.0.2"
-          exit 1
-        fi
-        if [ ! -d "$ANDROID_HOME/platforms/android-33" ]; then
-          echo "Android platform not found: $ANDROID_HOME/platforms/android-33"
-          exit 1
-        fi
-        echo "Android SDK verified successfully"
-
-    - name: Clean previous builds
-      run: |
-        echo "Cleaning previous builds..."
-        if [ -d "android" ]; then
-          cd android
-          ./gradlew clean --no-daemon
-          cd ..
-        fi
-        echo "Cleanup completed"
-
-    - name: Prebuild Android project
-      run: |
-        echo "Prebuilding Android project..."
-        export ANDROID_HOME=$HOME/Android/Sdk
-        export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/33.0.2
-        npx expo prebuild --platform android --clean
-        if [ $? -ne 0 ]; then
-          echo "Prebuild failed, trying without --clean..."
-          npx expo prebuild --platform android
-        fi
-        echo "Prebuild completed successfully"
+        packages: "build-tools;33.0.2 platforms;android-33"
 
     - name: Build Android APK
       run: |
-        echo "Building Android APK..."
         export ANDROID_HOME=$HOME/Android/Sdk
         export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/33.0.2
+        npx expo prebuild --platform android
         cd android
-        ./gradlew assembleRelease --no-daemon --stacktrace
-        if [ $? -ne 0 ]; then
-          echo "Build failed, trying with --no-parallel..."
-          ./gradlew assembleRelease --no-daemon --no-parallel --stacktrace
-        fi
-        cd ..
-        echo "Build completed successfully"
-
-    - name: Verify APK creation
-      run: |
-        echo "Verifying APK creation..."
-        if [ -f "android/app/build/outputs/apk/release/app-release.apk" ]; then
-          echo "APK found at: android/app/build/outputs/apk/release/app-release.apk"
-          ls -la android/app/build/outputs/apk/release/
-        else
-          echo "APK not found, checking build directory structure..."
-          find android -name "*.apk" | head -10
-          ls -la android/app/build/outputs/
-          exit 1
-        fi
-        echo "APK verification completed"
+        ./gradlew assembleRelease --no-daemon
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: app-release.apk
         path: android/app/build/outputs/apk/release/app-release.apk
-        retention-days: 14
