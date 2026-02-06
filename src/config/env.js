@@ -9,7 +9,7 @@ export const API_CONFIG = {
 
 // 当前环境的接口地址
 // 使用云服务器的API地址，与后端服务匹配
-export const BASE_API = 'http://8.159.143.90';
+export const BASE_API = 'http://8.159.143.90/api';
 // 优先使用环境变量中的API地址，否则使用默认配置
 // export const BASE_API = process.env.VITE_API_BASE_URL || (isDev ? API_CONFIG.dev : API_CONFIG.prod);
 
