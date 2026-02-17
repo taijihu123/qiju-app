@@ -8,9 +8,10 @@ config.server = {
   // 配置代理规则，处理跨域问题
   proxy: {
     '/api': {
-      target: 'http://localhost:8888',
+      target: 'http://127.0.0.1:5001',
       changeOrigin: true,
       secure: false,
+      pathRewrite: { '^/api': '/api' },
     },
   },
 };

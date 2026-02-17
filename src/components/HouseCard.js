@@ -1,21 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useHousing } from '../contexts/HousingContext';
 
 const HouseCard = ({ house, houseInfo, onPress }) => {
   // 支持两种属性名，优先使用house属性
   const houseData = house || houseInfo;
   // 输出传入的房源数据，验证数据是否正确
   console.log('HouseCard接收到的房源数据:', houseData);
-  const { toggleFavorite } = useHousing();
   
   // 从houseData中获取收藏状态（使用isCollected字段，兼容isFavorite）
-  const isCollected = houseData.isCollected || houseData.isFavorite || false;
+  const [isCollected, setIsCollected] = useState(houseData.isCollected || houseData.isFavorite || false);
 
   const handleCollectPress = () => {
-    // 使用Context的toggleFavorite函数更新状态
-    toggleFavorite(houseData.id);
+    // 直接在组件内部切换收藏状态
+    setIsCollected(!isCollected);
   };
 
   return (
@@ -94,7 +92,7 @@ const styles = StyleSheet.create({
   },
   card: {
     flexDirection: 'row',
-    height: 100,
+    height: 120,
     backgroundColor: '#FFFFFF',
     borderRadius: 12,
     overflow: 'hidden',
@@ -107,6 +105,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+    borderWidth: 2,
+    borderColor: '#FF0000',
   },
   imageContainer: {
     marginRight: 12,

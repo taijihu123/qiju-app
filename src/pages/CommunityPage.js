@@ -6,11 +6,12 @@ import { getCommunityPosts, publishCommunityPost, togglePostLike, commentOnPost 
 import { logger } from '../common/services/logger';
 import { theme } from '../common/styles/theme';
 import KnowledgePage from './KnowledgePage';
+import WishWallPage from './WishWallPage';
 import SidebarContainer from '../components/SidebarContainer';
 
 const CommunityPage = () => {
   const navigation = useNavigation();
-  const [activeTab, setActiveTab] = useState('community'); // community 或 knowledge
+  const [activeTab, setActiveTab] = useState('wishwall'); // community、knowledge 或 wishwall
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -285,14 +286,14 @@ const CommunityPage = () => {
           </TouchableOpacity>
         </View>
 
-        {/* 社区/知识标签切换 */}
+        {/* 许愿墙/知识/社区标签切换 */}
         <View style={styles.mainTabContainer}>
           <TouchableOpacity
-            style={[styles.mainTab, activeTab === 'community' && styles.mainTabActive]}
-            onPress={() => setActiveTab('community')}
+            style={[styles.mainTab, activeTab === 'wishwall' && styles.mainTabActive]}
+            onPress={() => setActiveTab('wishwall')}
           >
-            <Text style={[styles.mainTabText, activeTab === 'community' && styles.mainTabTextActive]}>
-              社区
+            <Text style={[styles.mainTabText, activeTab === 'wishwall' && styles.mainTabTextActive]}>
+              许愿墙
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -303,10 +304,22 @@ const CommunityPage = () => {
               知识
             </Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.mainTab, activeTab === 'community' && styles.mainTabActive]}
+            onPress={() => setActiveTab('community')}
+          >
+            <Text style={[styles.mainTabText, activeTab === 'community' && styles.mainTabTextActive]}>
+              社区
+            </Text>
+          </TouchableOpacity>
         </View>
 
-        {/* 条件渲染：社区或知识内容 */}
-        {activeTab === 'community' ? (
+        {/* 条件渲染：许愿墙、知识或社区内容 */}
+        {activeTab === 'wishwall' ? (
+          <WishWallPage />
+        ) : activeTab === 'knowledge' ? (
+          <KnowledgePage />
+        ) : (
           <>
             {/* 帖子列表 */}
             <FlatList
@@ -335,8 +348,6 @@ const CommunityPage = () => {
               <Ionicons name="create" size={24} color={theme.colors.white} />
             </TouchableOpacity>
           </>
-        ) : (
-          <KnowledgePage />
         )}
       </View>
     </SidebarContainer>

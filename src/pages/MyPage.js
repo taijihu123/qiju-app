@@ -31,7 +31,7 @@ const MyPage = () => {
           name: '上海智能Ailake',
           phone: '138****1234',
           email: 'zhangsan@example.com',
-          avatar: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=user%20avatar%20portrait%20friendly%20face&image_size=square',
+          avatar: require('../assets/images/logo.jpg'),
           memberLevel: '黄金会员',
           registrationDate: '2023-05-15',
           location: '上海'
@@ -49,7 +49,7 @@ const MyPage = () => {
           name: '上海智能Ailake',
           phone: '138****1234',
           email: 'zhangsan@example.com',
-          avatar: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=user%20avatar%20portrait%20friendly%20face&image_size=square',
+          avatar: require('../assets/images/logo.jpg'),
           memberLevel: '黄金会员',
           registrationDate: '2023-05-15',
           location: '上海'
@@ -63,7 +63,7 @@ const MyPage = () => {
         name: '上海智能Ailake',
         phone: '138****1234',
         email: 'zhangsan@example.com',
-        avatar: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=user%20avatar%20portrait%20friendly%20face&image_size=square',
+        avatar: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=circular%20green%20leaf%20avatar%20natural%20organic&image_size=square',
         memberLevel: '黄金会员',
         registrationDate: '2023-05-15',
         location: '上海'
@@ -239,7 +239,7 @@ const MyPage = () => {
               {/* 头像 */}
               <View style={styles.avatarContainer}>
                 <Image 
-                  source={{ uri: userInfo.avatar || 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=user%20avatar%20portrait%20friendly%20face&image_size=square' }} 
+                  source={userInfo.avatar || require('../assets/images/logo.jpg')} 
                   style={styles.avatar} 
                 />
               </View>

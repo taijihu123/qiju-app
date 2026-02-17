@@ -11,6 +11,7 @@ import Header from '../../common/components/Header';
 
 // 导入页面组件
 import RentHousePage from '../../pages/RentHousePage';
+import HomePage from '../../pages/HomePage';
 import HouseDetailScreen from '../../features/housing/components/HouseDetailScreen';
 import CommunityPage from '../../pages/CommunityPage';
 import ServicePage from '../../pages/ServicePage';
@@ -18,7 +19,7 @@ import SupermarketPage from '../../pages/SupermarketPage';
 import MyPage from '../../pages/MyPage';
 import KnowledgePage from '../../pages/KnowledgePage';
 import SmartAgentPage from '../../pages/SmartAgentPage';
-import LoginScreen from '../../features/auth/components/LoginScreen';
+import AilakeLoginPage from '../../pages/AilakeLoginPage';
 import RegisterScreen from '../../features/auth/components/RegisterScreen';
 import ForgotPasswordScreen from '../../features/auth/components/ForgotPasswordScreen';
 import EditUserInfoScreen from '../../features/auth/components/EditUserInfoScreen';
@@ -99,7 +100,7 @@ const TenantTabNavigator = () => {
     >
       <Tab.Screen 
         name="首页" 
-        component={RentHousePage} 
+        component={HomePage} 
         options={{ 
           headerShown: false
         }} 
@@ -200,7 +201,7 @@ const MainNavigator = () => {
       initialRouteName="TenantTabs"
     >
       {/* 登录相关屏幕 */}
-      <Stack.Screen name="Login" component={LoginScreen} options={{ gestureEnabled: false }} />
+      <Stack.Screen name="Login" component={AilakeLoginPage} options={{ gestureEnabled: false }} />
       <Stack.Screen name="Register" component={RegisterScreen} options={{ gestureEnabled: false }} />
       <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} options={{ gestureEnabled: false }} />
       

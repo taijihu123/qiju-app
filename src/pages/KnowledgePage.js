@@ -33,17 +33,21 @@ const KnowledgePage = () => {
         setCategories([
           { id: 1, name: '租房指南', parentId: null },
           { id: 2, name: '生活常识', parentId: null },
-          { id: 3, name: '维修技巧', parentId: null }
+          { id: 3, name: '维修技巧', parentId: null },
+          { id: 4, name: '创业咖啡', parentId: null },
+          { id: 5, name: '项目', parentId: null }
         ]);
       }
     } catch (error) {
       logger.error('获取知识分类失败:', error);
       // 使用模拟数据作为后备
-      setCategories([
-        { id: 1, name: '租房指南', parentId: null },
-        { id: 2, name: '生活常识', parentId: null },
-        { id: 3, name: '维修技巧', parentId: null }
-      ]);
+        setCategories([
+          { id: 1, name: '租房指南', parentId: null },
+          { id: 2, name: '生活常识', parentId: null },
+          { id: 3, name: '维修技巧', parentId: null },
+          { id: 4, name: '创业咖啡', parentId: null },
+          { id: 5, name: '项目', parentId: null }
+        ]);
     }
   };
 
@@ -70,7 +74,8 @@ const KnowledgePage = () => {
             scenario: '租房签约',
             createdAt: '2024-01-10',
             updatedAt: '2024-01-10',
-            views: 156
+            views: 156,
+            project_type: null
           },
           {
             id: 2,
@@ -81,7 +86,32 @@ const KnowledgePage = () => {
             scenario: '日常清洁',
             createdAt: '2024-01-08',
             updatedAt: '2024-01-08',
-            views: 234
+            views: 234,
+            project_type: null
+          },
+          {
+            id: 3,
+            title: '创业咖啡品牌推荐',
+            content: '1. 星巴克：全球连锁，品质稳定\n2. 瑞幸咖啡：性价比高，方便快捷\n3. 本地特色咖啡店：体验独特风味',
+            categoryId: 4,
+            categoryName: '创业咖啡',
+            scenario: '创业交流',
+            createdAt: '2024-01-15',
+            updatedAt: '2024-01-15',
+            views: 320,
+            project_type: 'coffee'
+          },
+          {
+            id: 4,
+            title: '小型创业项目指南',
+            content: '1. 自媒体运营：低门槛，高潜力\n2. 社区团购：利用本地资源\n3. 在线教育：知识变现的好途径',
+            categoryId: 5,
+            categoryName: '项目',
+            scenario: '创业准备',
+            createdAt: '2024-01-12',
+            updatedAt: '2024-01-12',
+            views: 450,
+            project_type: 'startup'
           }
         ];
         setEntries(mockEntries);
@@ -100,7 +130,8 @@ const KnowledgePage = () => {
           scenario: '租房签约',
           createdAt: '2024-01-10',
           updatedAt: '2024-01-10',
-          views: 156
+          views: 156,
+          project_type: null
         },
         {
           id: 2,
@@ -111,7 +142,32 @@ const KnowledgePage = () => {
           scenario: '日常清洁',
           createdAt: '2024-01-08',
           updatedAt: '2024-01-08',
-          views: 234
+          views: 234,
+          project_type: null
+        },
+        {
+          id: 3,
+          title: '创业咖啡品牌推荐',
+          content: '1. 星巴克：全球连锁，品质稳定\n2. 瑞幸咖啡：性价比高，方便快捷\n3. 本地特色咖啡店：体验独特风味',
+          categoryId: 4,
+          categoryName: '创业咖啡',
+          scenario: '创业交流',
+          createdAt: '2024-01-15',
+          updatedAt: '2024-01-15',
+          views: 320,
+          project_type: 'coffee'
+        },
+        {
+          id: 4,
+          title: '小型创业项目指南',
+          content: '1. 自媒体运营：低门槛，高潜力\n2. 社区团购：利用本地资源\n3. 在线教育：知识变现的好途径',
+          categoryId: 5,
+          categoryName: '项目',
+          scenario: '创业准备',
+          createdAt: '2024-01-12',
+          updatedAt: '2024-01-12',
+          views: 450,
+          project_type: 'startup'
         }
       ];
       setEntries(mockEntries);
@@ -315,34 +371,55 @@ const KnowledgePage = () => {
         <FlatList
           data={filteredEntries}
           keyExtractor={item => item.id.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.entryItem}
-              onPress={() => viewEntryDetail(item)}
-            >
-              <View style={styles.entryHeader}>
-                <Text style={styles.entryTitle}>{item.title}</Text>
-                <Text style={styles.entryCategory}>{item.categoryName}</Text>
-              </View>
-              <Text style={styles.entryContent} numberOfLines={2}>
-                {item.content.replace(/\n/g, ' ')}
-              </Text>
-              <View style={styles.entryFooter}>
-                <View style={styles.entryMeta}>
-                  <Ionicons name="time-outline" size={12} color={theme.colors.textSecondary} />
-                  <Text style={styles.entryMetaText}>{item.updatedAt}</Text>
+          renderItem={({ item }) => {
+            // 根据项目类型设置不同的样式
+            const getEntryItemStyle = () => {
+              if (item.project_type === 'coffee') {
+                return [styles.entryItem, styles.coffeeEntryItem];
+              } else if (item.project_type === 'startup') {
+                return [styles.entryItem, styles.startupEntryItem];
+              }
+              return styles.entryItem;
+            };
+
+            const getEntryCategoryStyle = () => {
+              if (item.project_type === 'coffee') {
+                return [styles.entryCategory, styles.coffeeEntryCategory];
+              } else if (item.project_type === 'startup') {
+                return [styles.entryCategory, styles.startupEntryCategory];
+              }
+              return styles.entryCategory;
+            };
+
+            return (
+              <TouchableOpacity
+                style={getEntryItemStyle()}
+                onPress={() => viewEntryDetail(item)}
+              >
+                <View style={styles.entryHeader}>
+                  <Text style={styles.entryTitle}>{item.title}</Text>
+                  <Text style={getEntryCategoryStyle()}>{item.categoryName}</Text>
                 </View>
-                <View style={styles.entryMeta}>
-                  <Ionicons name="eye-outline" size={12} color={theme.colors.textSecondary} />
-                  <Text style={styles.entryMetaText}>{item.views}</Text>
+                <Text style={styles.entryContent} numberOfLines={2}>
+                  {item.content.replace(/\n/g, ' ')}
+                </Text>
+                <View style={styles.entryFooter}>
+                  <View style={styles.entryMeta}>
+                    <Ionicons name="time-outline" size={12} color={theme.colors.textSecondary} />
+                    <Text style={styles.entryMetaText}>{item.updatedAt}</Text>
+                  </View>
+                  <View style={styles.entryMeta}>
+                    <Ionicons name="eye-outline" size={12} color={theme.colors.textSecondary} />
+                    <Text style={styles.entryMetaText}>{item.views}</Text>
+                  </View>
+                  <View style={styles.entryMeta}>
+                    <Ionicons name="location-outline" size={12} color={theme.colors.textSecondary} />
+                    <Text style={styles.entryMetaText}>{item.scenario}</Text>
+                  </View>
                 </View>
-                <View style={styles.entryMeta}>
-                  <Ionicons name="location-outline" size={12} color={theme.colors.textSecondary} />
-                  <Text style={styles.entryMetaText}>{item.scenario}</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          )}
+              </TouchableOpacity>
+            );
+          }}
           contentContainerStyle={styles.entriesList}
           refreshControl={
             <RefreshControl
@@ -671,6 +748,24 @@ const styles = StyleSheet.create({
   modalViews: {
     fontSize: 12,
     color: theme.colors.textSecondary,
+  },
+  // 创业咖啡条目样式
+  coffeeEntryItem: {
+    borderLeftWidth: 4,
+    borderLeftColor: '#6B46C1', // 紫色
+  },
+  coffeeEntryCategory: {
+    backgroundColor: '#F3E8FF',
+    color: '#6B46C1',
+  },
+  // 创业项目条目样式
+  startupEntryItem: {
+    borderLeftWidth: 4,
+    borderLeftColor: '#3B82F6', // 蓝色
+  },
+  startupEntryCategory: {
+    backgroundColor: '#DBEAFE',
+    color: '#3B82F6',
   },
 });
 

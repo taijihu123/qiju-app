@@ -156,8 +156,7 @@ const ServicePage = () => {
   }
 
   return (
-    <SidebarContainer navigation={navigation}>
-      <View style={styles.container}>
+    <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerTitle}>生活服务</Text>
           <Text style={styles.headerSubtitle}>您的生活好帮手</Text>
@@ -231,7 +230,6 @@ const ServicePage = () => {
           />
         </View>
       </View>
-    </SidebarContainer>
   );
 };
 
