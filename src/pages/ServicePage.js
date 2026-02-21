@@ -162,8 +162,6 @@ const ServicePage = () => {
           <Text style={styles.headerSubtitle}>您的生活好帮手</Text>
         </View>
 
-
-
         {/* 生活管家 */}
         <TouchableOpacity
           style={styles.stewardRecommend}
@@ -193,6 +191,23 @@ const ServicePage = () => {
             <View style={styles.stewardInfo}>
               <Text style={styles.stewardTitle}>智能体</Text>
               <Text style={styles.stewardDescription}>为您提供智能的生活助手服务</Text>
+            </View>
+          </View>
+          <Ionicons name="chevron-forward-outline" size={24} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+
+        {/* 自助菜单 */}
+        <TouchableOpacity
+          style={styles.stewardRecommend}
+          onPress={() => navigation.navigate('MenuPage')}
+        >
+          <View style={styles.stewardContent}>
+            <View style={styles.stewardIconContainer}>
+              <Ionicons name="cafe-outline" size={48} color={theme.colors.primary} />
+            </View>
+            <View style={styles.stewardInfo}>
+              <Text style={styles.stewardTitle}>自助菜单</Text>
+              <Text style={styles.stewardDescription}>在线点餐，享受美味咖啡和甜品</Text>
             </View>
           </View>
           <Ionicons name="chevron-forward-outline" size={24} color={theme.colors.textSecondary} />

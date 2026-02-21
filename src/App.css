@@ -1,0 +1,593 @@
+/* 全局样式重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 颜色变量定义 */
+:root {
+  /* 主色调 */
+  --color-milk-white: #FFFDFB;
+  --color-light-milk: #F5EFE6;
+  --color-wood: #D9C5B4;
+  --color-deep-brown: #3A3028;
+  --color-douban-green: #27A35C;
+  --color-warm-gray: #DCD3C8;
+  
+  /* 辅助色 */
+  --color-light-green: #C1E1C5;
+  --color-light-pink: #F2E4E3;
+  
+  /* 圆角规范 */
+  --radius-button: 16px;
+  --radius-card: 20px;
+  --radius-cabinet: 24px;
+  
+  /* 间距规范 */
+  --spacing-card: 20px;
+  --spacing-table: 80px;
+  --spacing-area: 30px;
+}
+
+/* 全局字体设置 */
+body {
+  font-family: '思源黑体', 'Noto Sans SC', sans-serif;
+  background-color: var(--color-milk-white);
+  color: var(--color-deep-brown);
+  line-height: 1.6;
+}
+
+/* 主容器 */
+.app-container {
+  width: 1920px;
+  height: 1080px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-milk-white);
+  overflow: hidden;
+}
+
+/* 顶部导航栏 */
+.header {
+  height: 50px;
+  background-color: var(--color-milk-white);
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  border-bottom: 1px solid var(--color-warm-gray);
+  flex-shrink: 0;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--color-wood);
+  display: flex;
+  align-items: center;
+}
+
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  background-color: var(--color-douban-green);
+  border-radius: 8px;
+  margin-right: 12px;
+}
+
+/* 顶部导航按钮 */
+.header-buttons {
+  display: flex;
+  gap: 16px;
+}
+
+.nav-button {
+  background-color: transparent;
+  color: var(--color-deep-brown);
+  border: 1px solid var(--color-warm-gray);
+  border-radius: var(--radius-button);
+  padding: 6px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: var(--color-light-milk);
+}
+
+.nav-button.active {
+  background-color: var(--color-douban-green);
+  color: white;
+  border-color: var(--color-douban-green);
+}
+
+/* 顶部：专业团队展示区 */
+.team-section {
+  padding: 20px 30px;
+  background-color: var(--color-milk-white);
+  border-bottom: 1px solid var(--color-warm-gray);
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--color-deep-brown);
+  margin-bottom: 16px;
+}
+
+.team-scroll {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.team-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.team-scroll::-webkit-scrollbar-track {
+  background: var(--color-light-milk);
+  border-radius: 3px;
+}
+
+.team-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-warm-gray);
+  border-radius: 3px;
+}
+
+.chef-card {
+  min-width: 280px;
+  background-color: var(--color-milk-white);
+  border: 1px solid var(--color-warm-gray);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.chef-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  object-fit: cover;
+}
+
+.chef-info h4 {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--color-deep-brown);
+  margin-bottom: 4px;
+}
+
+.chef-title {
+  font-size: 14px;
+  color: var(--color-douban-green);
+  margin-bottom: 8px;
+}
+
+.chef-desc {
+  font-size: 12px;
+  color: var(--color-deep-brown);
+  opacity: 0.8;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.book-btn {
+  background-color: var(--color-warm-gray);
+  color: var(--color-deep-brown);
+  border: none;
+  border-radius: var(--radius-button);
+  padding: 6px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.book-btn:hover {
+  background-color: var(--color-douban-green);
+  color: white;
+}
+
+/* 主内容区域 */
+.main-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* 左侧分类栏 */
+.category-sidebar {
+  width: 200px;
+  background-color: var(--color-light-milk);
+  padding: 20px 0;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.category-item {
+  padding: 16px 20px;
+  font-size: 16px;
+  color: var(--color-deep-brown);
+  cursor: pointer;
+  border-left: 4px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.category-item:hover {
+  background-color: rgba(220, 211, 200, 0.3);
+}
+
+.category-item.active {
+  background-color: var(--color-douban-green);
+  color: white;
+  border-left-color: var(--color-douban-green);
+}
+
+/* 右侧菜品区 */
+.menu-area {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+  background-color: var(--color-milk-white);
+  min-width: 0;
+}
+
+.menu-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--color-deep-brown);
+  margin-bottom: 24px;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-card);
+}
+
+/* 菜品卡片 */
+.menu-card {
+  background-color: white;
+  border: 1px solid var(--color-warm-gray);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card-image {
+  width: 100%;
+  height: 180px;
+  background-color: var(--color-light-milk);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--color-deep-brown);
+  margin-bottom: 8px;
+}
+
+.card-description {
+  font-size: 14px;
+  color: var(--color-deep-brown);
+  opacity: 0.8;
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-price {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--color-douban-green);
+}
+
+.card-add-button {
+  background-color: var(--color-douban-green);
+  color: white;
+  border: none;
+  border-radius: var(--radius-button);
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.card-add-button:hover {
+  background-color: #1e8a4a;
+  transform: scale(1.05);
+}
+
+/* 底部：栖居超市入口区 */
+.supermarket-section {
+  padding: 20px 30px;
+  background-color: var(--color-light-milk);
+  border-top: 1px solid var(--color-warm-gray);
+  flex-shrink: 0;
+}
+
+.supermarket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.view-all-btn {
+  background-color: transparent;
+  color: var(--color-douban-green);
+  border: 1px solid var(--color-douban-green);
+  border-radius: var(--radius-button);
+  padding: 6px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-all-btn:hover {
+  background-color: var(--color-douban-green);
+  color: white;
+}
+
+.supermarket-scroll {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.supermarket-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.supermarket-scroll::-webkit-scrollbar-track {
+  background: var(--color-milk-white);
+  border-radius: 3px;
+}
+
+.supermarket-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-warm-gray);
+  border-radius: 3px;
+}
+
+.supermarket-card {
+  min-width: 200px;
+  background-color: var(--color-milk-white);
+  border: 1px solid var(--color-light-green);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.supermarket-card:hover {
+  box-shadow: 0 4px 12px rgba(87, 127, 90, 0.1);
+  transform: translateY(-2px);
+}
+
+.supermarket-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.supermarket-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--color-deep-brown);
+  margin-bottom: 8px;
+}
+
+.supermarket-desc {
+  font-size: 12px;
+  color: var(--color-deep-brown);
+  opacity: 0.8;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.view-btn {
+  background-color: var(--color-light-green);
+  color: var(--color-douban-green);
+  border: none;
+  border-radius: var(--radius-button);
+  padding: 6px 16px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-btn:hover {
+  background-color: var(--color-douban-green);
+  color: white;
+}
+
+/* 底部购物车 */
+.cart-footer {
+  height: 80px;
+  background-color: var(--color-milk-white);
+  border-top: 1px solid var(--color-warm-gray);
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  justify-content: space-between;
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.cart-info {
+  display: flex;
+  align-items: center;
+}
+
+.cart-count {
+  font-size: 16px;
+  color: var(--color-deep-brown);
+  margin-right: 24px;
+}
+
+.cart-total {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--color-douban-green);
+}
+
+.checkout-button {
+  background-color: var(--color-douban-green);
+  color: white;
+  border: none;
+  border-radius: var(--radius-button);
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.checkout-button:hover {
+  background-color: #1e8a4a;
+  transform: scale(1.05);
+}
+
+.checkout-button:disabled {
+  background-color: var(--color-warm-gray);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 会员中心页面 */
+.member-content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+  background-color: var(--color-milk-white);
+  min-width: 0;
+}
+
+.member-benefits {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-card);
+  margin-bottom: 30px;
+}
+
+.benefit-card {
+  background-color: var(--color-milk-white);
+  border: 1px solid var(--color-warm-gray);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.benefit-icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.benefit-card h4 {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--color-deep-brown);
+  margin-bottom: 8px;
+}
+
+.benefit-card p {
+  font-size: 14px;
+  color: var(--color-deep-brown);
+  opacity: 0.8;
+  line-height: 1.4;
+}
+
+/* 响应式设计 */
+@media (max-width: 1920px) {
+  .app-container {
+    width: 100%;
+    height: 100vh;
+  }
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-light-milk);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-warm-gray);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-wood);
+}
+
+/* 加载动画 */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 16px;
+  color: var(--color-deep-brown);
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--color-deep-brown);
+  opacity: 0.6;
+}

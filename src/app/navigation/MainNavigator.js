@@ -16,6 +16,7 @@ import HouseDetailScreen from '../../features/housing/components/HouseDetailScre
 import CommunityPage from '../../pages/CommunityPage';
 import ServicePage from '../../pages/ServicePage';
 import SupermarketPage from '../../pages/SupermarketPage';
+import MenuPage from '../../pages/MenuPage';
 import MyPage from '../../pages/MyPage';
 import KnowledgePage from '../../pages/KnowledgePage';
 import SmartAgentPage from '../../pages/SmartAgentPage';
@@ -608,7 +609,14 @@ const MainNavigator = () => {
         })}
       />
       
-
+      {/* 自助菜单页面 */}
+      <Stack.Screen 
+        name="MenuPage" 
+        component={MenuPage} 
+        options={({ navigation }) => ({
+          headerShown: false
+        })}
+      />
       
       {/* 区块链示例页面 */}
       <Stack.Screen 
